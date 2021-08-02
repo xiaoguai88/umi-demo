@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'umi';
-
+import styles from './style.less'
 interface IVacantSpaceProps {
   dispatch: any;
 }
@@ -10,32 +10,30 @@ interface IVacantSpaceState {
 class VacantSpace extends Component<IVacantSpaceProps,IVacantSpaceState> {
   constructor(props:IVacantSpaceProps){
     super(props)
-    this.state = {
-      count: 0
-    }
   }
   handleClick = ()=>{
     this.props.dispatch({
-      type:'vacantSpace/save',
+      type:'vacantSpace/getda',
       payload:{}
     })
   }
   render() {
-    console.log('===',this.props);
-    const { count } = this.props
-    console.log(count);
+    const {vacantSpace} = this.props
+    console.log(vacantSpace);
     
     return <div>
       vacantspace
-      <h2>{count}</h2>
+      <h2>{vacantSpace}</h2>
       <button onClick={this.handleClick}>+</button>
+      <div className={styles.bg}></div>
       </div>
   }
 }
 const mapStateToProps = (state)=> {
+  console.log(state);
   return (
   { 
-    ...state.vacantSpace,
+    ...state,
  })
 }
 export default connect(mapStateToProps) (VacantSpace)

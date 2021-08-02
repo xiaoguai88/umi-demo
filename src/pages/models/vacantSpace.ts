@@ -1,28 +1,36 @@
 
 const model = {
     namespace:'vacantSpace',
-    state:{
-        count: 0
-    },
+    state: 0,
     reducers:{
-        save(state, action) {
+        save(state, {payload}) {
             return {
               ...state,
-              ...action.payload,
-            };
+              ...payload
+            }
           },
     },
-    effects:{},
+    effects:{
+      *getda({payload},{call,put,select}){
+        console.log('payload',payload);
+      yield put({
+        type:'save',
+        payload:{
+        }
+      })
+
+      }
+    },
     subscriptions:{
-        setup({ dispatch, history }) {
-            return history.listen(({ pathname }) => {
-              if (pathname === '/') {
-                dispatch({
-                  type: 'save',
-                });
-              }
-            });
-          },
+        // setup({ dispatch, history }) {
+        //     return history.listen(({ pathname }) => {
+        //       if (pathname === '/') {
+        //         dispatch({
+        //           type: 'save',
+        //         });
+        //       }
+        //     });
+        //   },
     }
 }
 export default model
