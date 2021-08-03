@@ -1,24 +1,23 @@
+import { getData } from '@/services';
+import { Model, EffectsMapObject } from 'dva';
 
-const model = {
-    namespace:'vacantSpace',
-    state: 0,
+
+const model: Model = {
+    namespace: 'vacantSpace',
+    state: {
+      guangList: []
+    },
     reducers:{
-        save(state, {payload}) {
-            return {
-              ...state,
-              ...payload
-            }
+        save(state, { payload }) {
+          const _state = JSON.parse(JSON.stringify(state))
+          _state.guangList = payload.data
+            return _state;
           },
     },
     effects:{
-      *getda({payload},{call,put,select}){
-        console.log('payload',payload);
-      yield put({
-        type:'save',
-        payload:{
-        }
-      })
-
+      *getInitdata({ payload },{ call, put, select }) {
+        const res = yield call( getData, payload)
+      yield put( { type:'save', payload: res.data })
       }
     },
     subscriptions:{
